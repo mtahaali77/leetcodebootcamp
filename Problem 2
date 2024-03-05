@@ -1,0 +1,22 @@
+lass Solution(object):
+    def videoStitching(self, clips, time):
+        """
+        :type clips: List[List[int]]
+        :type time: int
+        :rtype: int
+        """
+        clips.sort()
+        start = 0
+        end = 0
+        num_clips = 0
+        max_end = 0
+
+        while end < len(clips) and max_end < time:
+            num_clips += 1
+            while start < len(clips) and clips[start][0] <= max_end:
+                end = max(end, start + 1)
+                max_end = max(max_end, clips[start][1])
+                start += 1
+            if start >= len(clips) or max_end < time:
+                return -1
+        return num_clips
