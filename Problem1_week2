@@ -1,0 +1,33 @@
+class Solution(object):
+    def myAtoi(self,s):
+        # Initialize variables
+        sign = 1
+        result = 0
+        i = 0
+        max_int = 2**31 - 1
+        min_int = -2**31
+    
+        # Skip leading whitespaces
+        while i < len(s) and s[i] == ' ':
+            i += 1
+    
+        # Check for sign
+        if i < len(s) and (s[i] == '+' or s[i] == '-'):
+            if s[i] == '-':
+                sign = -1
+            i += 1
+    
+        # Process digits
+        while i < len(s) and s[i].isdigit():
+            digit = int(s[i])
+            # Check for overflow
+            if result > (max_int - digit) // 10:
+                return max_int if sign == 1 else min_int
+            result = result * 10 + digit
+            i += 1
+    
+        # Apply sign
+        result *= sign
+    
+        return result
+        
